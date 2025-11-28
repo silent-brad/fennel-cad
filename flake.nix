@@ -1,5 +1,5 @@
 {
-  description = "LuaCAD Fennel Build Script";
+  description = "FennelCAD Build Script";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -21,7 +21,7 @@
           fnlfmt
           openscad
         ];
-        luacad-fennel-script = pkgs.writeScriptBin "run-luacad" ''
+        luacad-fennel-script = pkgs.writeScriptBin "fnlcad" ''
           if [ $# -eq 0 ]; then
             echo "Usage: run-luacad <lua-file>"
             exit 1
