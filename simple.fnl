@@ -5,4 +5,4 @@
 ;; add translate (5 0 0)
                   (sphere {:r (* radius 2)}))
       model (+ my-cube (my-sphere 2))]
-  (model:export "simple.scad"))
+  (model:export "./simple.scad"))
