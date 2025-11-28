@@ -1,5 +1,5 @@
 {
-  description = "CAD for DIY Display";
+  description = "LuaCAD Fennel Build Script";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -21,7 +21,7 @@
           fnlfmt
           openscad
         ];
-        run-luacad-script = pkgs.writeScriptBin "run-luacad" ''
+        luacad-fennel-script = pkgs.writeScriptBin "run-luacad" ''
           if [ $# -eq 0 ]; then
             echo "Usage: run-luacad <lua-file>"
             exit 1
@@ -29,15 +29,15 @@
 
           FENNEL_FILE="$1"
           BASE_NAME=''${FENNEL_FILE%.*}
+          LUA_FILE="$BASE_NAME.lua"
 
-          ${pkgs.luajitPackages.fennel}/bin/fennel -c simple.fnl > simple.lua
-          #LUA_PATH="?.lua;$\{luacad}/?.lua;$\{luacad}/?/init.lua"
-          mkdir -p build
-          cp -r ${luacad}/* build
-          LUA_PATH="?.lua;build/?.lua;build/?/init.lua"
-          ${pkgs.luajit}/bin/luajit simple.lua
+          ${pkgs.luajitPackages.fennel}/bin/fennel -c $FENNEL_FILE > $LUA_FILE
+          LUA_PATH="?.lua;${luacad}/?.lua;${luacad}/?/init.lua" ${pkgs.luajit}/bin/luajit $LUA_FILE
 
-          #$\{pkgs.openscad}/bin/openscad -o $BASE_NAME.scad $BASE_NAME.lua
+          ${pkgs.openscad}/bin/openscad -o $BASE_NAME.stl $BASE_NAME.scad
         '';
-      in { defaultPackage = run-luacad-script; });
+      in {
+        packages.default = luacad-fennel-script;
+        devShells.default = pkgs.mkShell { buildInputs = my-buildInputs; };
+      });
 }

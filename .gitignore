@@ -1,5 +1,8 @@
 *
+*.lua
+*.scad
+*.stl
 !.gitignore
 !flake.nix
 !flake.lock
-!simple.fnl
+!main.fnl
