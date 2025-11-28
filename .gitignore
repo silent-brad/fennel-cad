@@ -1,5 +1,5 @@
 *
 !.gitignore
-!flate.nix
+!flake.nix
 !flake.lock
 !simple.fnl
