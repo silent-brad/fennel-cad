@@ -1,0 +1,5 @@
+*
+!.gitignore
+!flate.nix
+!flake.lock
+!simple.fnl
